@@ -31,6 +31,16 @@ namespace AilawaAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<AilawaContext>(e => e.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUploadCaseDetails, UploadCaseDetails>();
+            services.AddTransient<IVendorDetails, VendorDetails>();
+
+            services.AddCors(options => {
+                options.AddPolicy("AllowAllHeaders",
+                       builder => {
+                           builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                       });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +56,8 @@ namespace AilawaAPI
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAllHeaders");
+            
             app.UseHttpsRedirection();
             app.UseMvc();
         }
