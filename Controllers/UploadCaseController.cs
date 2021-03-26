@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System;
 using OfficeOpenXml;
 using System.Collections.Generic;
+using System.Net.Mime;
 
 namespace AilawaAPI.Controllers
 {
@@ -22,7 +23,7 @@ namespace AilawaAPI.Controllers
 
         [Route("UploadExcel")]
         [HttpPost, DisableRequestSizeLimit]
-        public string ExcelUpload()
+        public IActionResult ExcelUpload()
         {
             string message = "";
             FileInfo caseFile = null;
@@ -68,18 +69,17 @@ namespace AilawaAPI.Controllers
                                     LocationName = workSheet.Cells[i, 8].Text
                                 });
                             }
-
                             message = uploadCaseDetails.ExcelUpload(tempCaseDetails);
                         }
                     }
                     else
                         message = "Uploaded File is not Excel. Please Upload Excel File.";
                 }
-                return message;
+                return Ok(message);
             }
             catch (Exception)
             {
-                return "error";
+                return Ok("error");
             }
             finally
             {

@@ -32,7 +32,7 @@ namespace AilawaAPI
             services.AddDbContext<AilawaContext>(e => e.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUploadCaseDetails, UploadCaseDetails>();
             services.AddTransient<IVendorDetails, VendorDetails>();
-
+            
             services.AddCors(options => {
                 options.AddPolicy("AllowAllHeaders",
                        builder => {

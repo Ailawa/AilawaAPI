@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AilawaAPI.Data.models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,15 +22,15 @@ namespace AilawaAPI.Service
             if (output > 0)
             {
                 context.Database.ExecuteSqlCommand("EXEC usp_tempCaseDetails_UpdateLocationMasterID");
-                return "Excel file has been successfully uploaded";
+                return output.ToString() + " Records successfully uploaded from Excel file.";
             }
             else
-                return "Excel file uploaded has fiald";
+                return "No record uploaded from Excel";
         }
 
         public List<TempCaseDetails> UploadedData()
         {
-            throw new System.NotImplementedException();
+            return context.TempCaseDetails.AsEnumerable().ToList();
         }
     }
 }
